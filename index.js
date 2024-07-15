@@ -9,26 +9,19 @@ function cloudflareAccessAuth(app, config, services) {
 
   passport.use(
     new CustomStrategy(async (req, done) => {
+      console.log(req.headers)
       const email = req.headers['cf-access-authenticated-user-email'];
+      console.log(email)
       const user = await userService.loginUserWithoutPassword(email, true);
+      console.log(user)
       done(null, user);
     }),
   );
 
   app.use(passport.initialize());
-  app.use(passport.session());
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser((user, done) => done(null, user));
-
-  app.use('/api/', (req, res, next) => {
-    if (req.user) {
-      next();
-    } else {
-      return res
-        .status('401')
-        .end();
-    }
-  });
+  app.use(passport.authenticate('custom', { session: false }))
 }
 
 const options = {
