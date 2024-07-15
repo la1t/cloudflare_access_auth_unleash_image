@@ -5,7 +5,6 @@ const passport = require('@passport-next/passport');
 const CustomStrategy = require('passport-custom').Strategy;
 
 function cloudflareAccessAuth(app, config, services) {
-  const { baseUriPath } = config.server;
   const { userService } = services;
 
   passport.use(
