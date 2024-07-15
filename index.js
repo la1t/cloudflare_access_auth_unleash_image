@@ -12,16 +12,18 @@ function cloudflareAccessAuth(app, config, services) {
       console.log(req.headers)
       const email = req.headers['cf-access-authenticated-user-email'];
       console.log(email)
+      if (!email) {
+        done(null, null);
+      }
       const user = await userService.loginUserWithoutPassword(email, true);
       console.log(user)
       done(null, user);
     }),
   );
 
-  app.use(passport.initialize());
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser((user, done) => done(null, user));
-  app.use(passport.authenticate('custom', { session: false }))
+  app.use('/api/', passport.authenticate('custom', { session: false }));
 }
 
 const options = {
