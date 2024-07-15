@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        unleash-server-version: ["6.0.6"]
+        unleash-server-version: ["5.8.1", "6.0.6"]
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
