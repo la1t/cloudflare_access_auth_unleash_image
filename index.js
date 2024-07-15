@@ -21,6 +21,7 @@ function cloudflareAccessAuth(app, config, services) {
     }),
   );
 
+  app.use(passport.initialize());
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser((user, done) => done(null, user));
   app.use('/api/', passport.authenticate('custom', { session: false }));
