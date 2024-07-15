@@ -9,14 +9,11 @@ function cloudflareAccessAuth(app, config, services) {
 
   passport.use(
     new CustomStrategy(async (req, done) => {
-      console.log(req.headers)
       const email = req.headers['cf-access-authenticated-user-email'];
-      console.log(email)
       if (!email) {
         done(null, null);
       }
       const user = await userService.loginUserWithoutPassword(email, true);
-      console.log(user)
       done(null, user);
     }),
   );
