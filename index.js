@@ -24,11 +24,13 @@ function cloudflareAccessAuth(app, config, services) {
   app.use('/api/', passport.authenticate('custom', { session: false }));
 }
 
-const options = {
-  authentication: {
-    type: 'custom',
-    customAuthHandler: cloudflareAccessAuth,
+unleash.start({
+  // authentication: {
+  //   type: 'custom',
+  //   customAuthHandler: cloudflareAccessAuth,
+  // },
+  server: {
+    enableRequestLogger: true,
   },
-};
-
-unleash.start(options);
+  logLevel: 'info',
+});
