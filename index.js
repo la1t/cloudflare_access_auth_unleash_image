@@ -12,6 +12,7 @@ function cloudflareAccessAuth(app, config, services) {
       const email = req.headers['cf-access-authenticated-user-email'];
       if (!email) {
         done(null, null);
+        return
       }
       const user = await userService.loginUserWithoutPassword(email, true);
       done(null, user);
