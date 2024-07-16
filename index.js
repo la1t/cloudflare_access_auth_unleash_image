@@ -11,11 +11,10 @@ function cloudflareAccessAuth(app, config, services) {
     new CustomStrategy(async (req, done) => {
       const email = req.headers['cf-access-authenticated-user-email'];
       if (!email) {
-        done(null, null);
-        return
+        return done(null, false);
       }
       const user = await userService.loginUserWithoutPassword(email, true);
-      done(null, user);
+      return done(null, user);
     }),
   );
 
